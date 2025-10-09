@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GoldPrice>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Bảng giá vàng";
+}
+
+<h2>Bảng giá vàng</h2>
+<p><a asp-action="Create" class="btn btn-primary">Thêm mới</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Công ty</th>
+            <th>Loại vàng</th>
+            <th>Giá mua</th>
+            <th>Giá bán</th>
+            <th>Ngày</th>
+            <th>Hiển thị</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var g in Model)
+        {
+            <tr>
+                <td>@g.Company?.CompanyName</td>
+                <td>@g.GoldType?.GoldTypeName</td>
+                <td>@g.BuyPrice.ToString("N0")</td>
+                <td>@g.SellPrice.ToString("N0")</td>
+                <td>@g.ApplyDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@g.GoldPriceId" class="btn btn-sm btn-warning">Sửa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GoldType>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Gold Types";
+}
+
+<h2>Danh mục loại vàng</h2>
+
+<p><a asp-action="Create" class="btn btn-primary">Thêm mới</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên loại vàng</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GoldTypeId</td>
+                <td>@item.GoldTypeName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.GoldTypeId" class="btn btn-sm btn-warning">Sửa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

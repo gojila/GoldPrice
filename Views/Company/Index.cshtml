@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Company>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Danh sách công ty";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a class="btn btn-primary" href="/Company/Create">+ Thêm công ty</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên công ty</th>
+            <th>Địa chỉ</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Mã số thuế</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CompanyName</td>
+                <td>@item.Address</td>
+                <td>@item.Email</td>
+                <td>@item.Website</td>
+                <td>@item.TaxCode</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/Company/Create/@item.CompanyId">Sửa</a>
+                    <a class="btn btn-sm btn-danger" href="/Company/Delete/@item.CompanyId" onclick="return confirm('Xóa công ty này?')">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
