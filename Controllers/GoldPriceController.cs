@@ -1,5 +1,6 @@
 ﻿using GoldPrice.Data;
 using GoldPrice.Models;
+using GoldPrice.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -25,26 +26,65 @@ namespace GoldPrice.Controllers
             return View(prices);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             await LoadDropdowns();
             return View(new GoldPrice.Models.GoldPrice());
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(GoldPrice.Models.GoldPrice model)
-        {
-            if (ModelState.IsValid)
-            {
-                model.CreatedDate = DateTime.Now;
-                _context.Add(model);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(GoldPrice.Models.GoldPrice model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        model.CreatedDate = DateTime.Now;
+        //        _context.Add(model);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            await LoadDropdowns();
-            return View(model);
+        //    await LoadDropdowns();
+        //    return View(model);
+        //}
+
+        [HttpPost]
+        [Route("goldprice/post_create")]
+        public async Task<IActionResult> PostCreate([FromBody] GoldPriceCreateDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            try 
+            {
+                GoldType goldType = new GoldType();
+
+                goldType.GoldTypeName = dto.GoldTypeName;
+                goldType.Remark = dto.GoldTypeName;
+
+                _context.Add(goldType);
+                await _context.SaveChangesAsync();
+
+
+                Models.GoldPrice goldPrice = new Models.GoldPrice();
+
+                goldPrice.CompanyId = 1;
+                goldPrice.GoldTypeId = goldType.GoldTypeId;
+                goldPrice.BuyPrice = dto.BuyPrice;
+                goldPrice.SellPrice = dto.SellPrice;
+                goldPrice.IsBuyUpdating = dto.IsBuyUpdating;
+                goldPrice.IsSellUpdating = dto.IsSellUpdating;
+                goldPrice.ApplyDate = DateTime.Now;
+
+                _context.Add(goldPrice);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message});
+            }
         }
 
         public async Task<IActionResult> Edit(int id)

@@ -6,7 +6,9 @@
 }
 
 <h2>Bảng giá vàng</h2>
-<p><a asp-action="Create" class="btn btn-primary">Thêm mới</a></p>
+<p>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addGoldTypeModal">Thêm loại vàng</button>
+</p>
 
 <table class="table table-striped">
     <thead>
@@ -31,8 +33,95 @@
                 <td>@g.ApplyDate.ToString("dd/MM/yyyy")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@g.GoldPriceId" class="btn btn-sm btn-warning">Sửa</a>
+                    <a class="btn btn-sm btn-danger" href="/goldprice/delete/@g.GoldPriceId" onclick="return confirm('Xóa loại vàng này?')">Xóa</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Modal thêm loại vàng -->
+<div class="modal fade" id="addGoldTypeModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content" 
+            x-data="{
+                GoldTypeName: '',
+                BuyPrice: '',
+                SellPrice: '',
+                IsBuyUpdating: false,
+                IsSellUpdating: false,
+                ModifiedDate: new Date().toISOString().substring(0,10),
+                
+                init() {
+                    this.$nextTick(() => {
+                        this.buyAuto = new AutoNumeric($refs.BuyPrice, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 0 });
+                        this.sellAuto = new AutoNumeric($refs.SellPrice, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 0 });
+                        flatpickr(this.$refs.datepicker, { dateFormat: 'd/m/Y' });
+                    });
+                },
+
+                async saveGoldType() {
+                    try{
+                        const res = await fetch('/goldprice/post_create', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                GoldTypeName: this.GoldTypeName,
+                                BuyPrice: parseFloat(this.BuyPrice.replace(/,/g, '')) || 0,
+                                SellPrice: parseFloat(this.SellPrice.replace(/,/g, '')) || 0,
+                                IsBuyUpdating: this.IsBuyUpdating,
+                                IsSellUpdating: this.IsSellUpdating
+                            })
+                        });
+
+                        if (res.ok) {
+                            alert('Lưu thành công!');
+                            const modalEl = document.getElementById('addGoldTypeModal');
+                            const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                            modal.hide();
+                            window.location.reload();
+                        } else {
+                            const errText = await res.text();
+                            alert('Lỗi: ' + errText);
+                        }
+                    }
+                    catch(e){
+                        alert('Lỗi kết nối: ' + e.message);
+                    }
+                },
+            }"
+            x-init="init()"
+        >
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Thêm loại vàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label>Loại vàng</label>
+                    <input type="text" class="form-control" x-model="GoldTypeName" placeholder="VD: Vàng SJC 9999">
+                </div>
+                <div class="mb-3">
+                    <label>Giá mua</label>
+                    <input type="text" x-ref="BuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end" x-model="BuyPrice" placeholder="VD: 7450000">
+                </div>
+                <div class="mb-3">
+                    <label>Giá mua đang cập nhật</label>
+                    <input type="checkbox" x-model="IsBuyUpdating">
+                </div>
+                <div class="mb-3">
+                    <label>Giá bán</label>
+                    <input type="text" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end" x-model="SellPrice" placeholder="VD: 7500000">
+                </div>
+                <div class="mb-3">
+                    <label>Giá bán đang cập nhật</label>
+                    <input type="checkbox" x-model="IsSellUpdating">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" x-on:click="GoldTypeName=''; BuyPrice=''; SellPrice=''; IsBuyUpdating=false; IsSellUpdating=false; $root.closeModal()">Đóng</button>
+                <button type="button" class="btn btn-primary" x-on:click="saveGoldType()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
