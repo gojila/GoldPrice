@@ -4,35 +4,190 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = "Bảng giá vàng";
 }
+<div x-data="{
+     selectedIds: [],
 
-<h2>Bảng giá vàng</h2>
-<p><a asp-action="Create" class="btn btn-primary">Thêm mới</a></p>
+     GoldPriceId: 0,
+     GoldTypeName: '' ,
+     BuyPrice: '' ,
+     SellPrice: '' ,
+     IsBuyUpdating: false,
+     IsSellUpdating: false,
+     ModifiedDate: new Date().toISOString().substring(0,10),
+     submitted: false,
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Công ty</th>
-            <th>Loại vàng</th>
-            <th>Giá mua</th>
-            <th>Giá bán</th>
-            <th>Ngày</th>
-            <th>Hiển thị</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var g in Model)
-        {
+     init() {
+         this.$nextTick(()=>{
+            //this.buyAuto = new AutoNumeric($refs.BuyPrice, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 0 });
+            //this.sellAuto = new AutoNumeric($refs.SellPrice, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 0 });
+            //flatpickr(this.$refs.datepicker, { dateFormat: 'd/m/Y' });
+            });
+        },
+
+        async openEditModal(id) {
+            const res = await fetch(`/goldprice/get/${id}`);
+            const data = await res.json();
+
+            this.GoldPriceID = id;
+            this.GoldTypeName = data.goldTypeName;
+            this.BuyPrice = data.buyPrice;
+            this.SellPrice = data.sellPrice;
+            //this.buyAuto.set(data.buyPrice);
+            //this.sellAuto.set(data.sellPrice);
+            this.IsBuyUpdating = data.isBuyUpdating;
+            this.IsSellUpdating = data.isSellUpdating;
+
+            new bootstrap.Modal(document.getElementById('addGoldTypeModal')).show();
+        },
+
+        async saveGoldType() {
+            try{
+                this.submitted = true;
+
+                if (!this.GoldTypeName) {
+                    alert('Vui lòng nhập loại vàng');
+                    return;
+                }
+
+                const res = await fetch('/goldprice/post_create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        GoldPriceID: this.GoldPriceID,
+                        GoldTypeName: this.GoldTypeName,
+                        //BuyPrice: parseFloat(this.BuyPrice.replace(/,/g, '')) || 0,
+                        //SellPrice: parseFloat(this.SellPrice.replace(/,/g, '')) || 0,
+                        BuyPrice: parseFloat(this.BuyPrice) || 0,
+                        SellPrice: parseFloat(this.SellPrice) || 0,
+                        IsBuyUpdating: this.IsBuyUpdating,
+                        IsSellUpdating: this.IsSellUpdating
+                    })
+                });
+
+                if (res.ok) {
+                    alert('Lưu thành công!');
+                    const modalEl = document.getElementById('addGoldTypeModal');
+                    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                    modal.hide();
+                    window.location.reload();
+                } else {
+                    const errText = await res.text();
+                    alert('Lỗi: ' + errText);
+                }
+            }
+            catch(e){
+                alert('Lỗi kết nối: ' + e.message);
+            }
+        },
+
+        async onDelete(){
+            if (!confirm(`Bạn có chắc muốn xóa ${this.selectedIds.length} dòng?`))
+                return;
+
+            const res = await fetch('/goldprice/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(this.selectedIds)
+            });
+
+            if (res.ok) {
+                alert('Xóa thành công');
+                location.reload();
+            } else {
+                alert('Xóa thất bại');
+            }
+        },
+
+        get isAllSelected() {
+            return this.selectedIds.length === document.querySelectorAll('tbody input[type=checkbox]').length && this.selectedIds.length > 0;
+        },
+
+        toggleAll(event) {
+            if (event.target.checked) {
+                this.selectedIds = Array.from(document.querySelectorAll('tbody input[type=checkbox]')).map(cb => parseInt(cb.value));
+            } else {
+                this.selectedIds = [];
+            }
+        },
+    }"
+    x-init="init()">
+    <h2>Bảng giá vàng</h2>
+    <p>
+        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addGoldTypeModal">Thêm</button>
+        <button class="btn btn-danger btn-sm" x-on:click="onDelete()">Xóa</button>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@g.Company?.CompanyName</td>
-                <td>@g.GoldType?.GoldTypeName</td>
-                <td>@g.BuyPrice.ToString("N0")</td>
-                <td>@g.SellPrice.ToString("N0")</td>
-                <td>@g.ApplyDate.ToString("dd/MM/yyyy")</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@g.GoldPriceId" class="btn btn-sm btn-warning">Sửa</a>
-                </td>
+                <th style="width:40px">
+                    <input type="checkbox" x-on:change="toggleAll($event)" :checked="isAllSelected">
+                </th>
+                <th>Công ty</th>
+                <th>Loại vàng</th>
+                <th>Giá mua</th>
+                <th>Giá bán</th>
+                <th>Ngày</th>
+                <th>Hiển thị</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var g in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" :value="@g.GoldPriceId" x-model="selectedIds"></td>
+                    <td>@g.Company?.CompanyName</td>
+                    <td>@g.GoldType?.GoldTypeName</td>
+                    <td>@g.BuyPrice.ToString("N0")</td>
+                    <td>@g.SellPrice.ToString("N0")</td>
+                    <td>@g.ApplyDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @* <a asp-action="Edit" asp-route-id="@g.GoldPriceId" class="btn btn-sm btn-warning">Sửa</a> *@
+                        <button class="btn btn-sm btn-warning" x-on:click="openEditModal(@g.GoldPriceId)">Sửa</button>
+                        @* <a class="btn btn-sm btn-danger" href="/goldprice/delete/@g.GoldPriceId" onclick="return confirm('Xóa loại vàng này?')">Xóa</a> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Modal thêm loại vàng -->
+    <div class="modal fade" id="addGoldTypeModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Thêm loại vàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Loại vàng</label>
+                        <input type="text" class="form-control" x-model.trim="GoldTypeName" :class="{ 'is-invalid': submitted && !GoldTypeName }" placeholder="VD: Vàng SJC 9999">
+                        <div class="invalid-feedback">Vui lòng nhập loại vàng</div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Giá mua</label>
+                        <input type="text" x-ref="BuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end" x-model="BuyPrice" placeholder="VD: 7450000">
+                    </div>
+                    <div class="mb-3">
+                        <label>Giá mua đang cập nhật</label>
+                        <input type="checkbox" x-model="IsBuyUpdating">
+                    </div>
+                    <div class="mb-3">
+                        <label>Giá bán</label>
+                        <input type="text" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end" x-model="SellPrice" placeholder="VD: 7500000">
+                    </div>
+                    <div class="mb-3">
+                        <label>Giá bán đang cập nhật</label>
+                        <input type="checkbox" x-model="IsSellUpdating">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" x-on:click="GoldPriceID = 0; GoldTypeName=''; BuyPrice=''; SellPrice=''; IsBuyUpdating=false; IsSellUpdating=false; $root.closeModal()">Đóng</button>
+                    <button type="button" class="btn btn-primary" x-on:click="saveGoldType()">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

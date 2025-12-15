@@ -1,0 +1,106 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: #faf7f2;
+    color: #2c2c2c;
+    font-family: "Times New Roman", serif;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === COMPANY HEADER === */
+.company-wrapper {
+    padding: 30px 20px;
+    border-bottom: 4px solid #c59d5f;
+    background: linear-gradient(to bottom, #fffaf2, #faf7f2);
+}
+
+.company-name {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #8b5e34;
+    letter-spacing: 2px;
+}
+
+.company-meta {
+    font-size: 2.2rem;
+    color: #5a4632;
+    margin-top: 8px;
+}
+
+/* === TITLE === */
+.price-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 25px 0 15px;
+    color: #a87928;
+}
+
+/* === TABLE === */
+table {
+    width: 95%;
+    margin: auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+thead {
+    background: #f3e2c7;
+}
+
+th {
+    font-size: 2.3rem;
+    padding: 18px;
+    border-bottom: 3px solid #c59d5f;
+}
+
+td {
+    font-size: 2.5rem;
+    padding: 16px;
+    border-bottom: 1px solid #e2d4bc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* === ALIGN === */
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+/* === PRICE === */
+.buy {
+    color: #1b6f4b;
+    font-weight: 700;
+}
+
+.sell {
+    color: #8b1e1e;
+    font-weight: 700;
+}
+
+/* === FOOTER === */
+.updated-time {
+    margin-top: 18px;
+    font-size: 2.4rem;
+    color: #6c584c;
+}
+
+.footer {
+    text-align: center;
+    padding: 12px 0;
+    font-size: 1.4rem;
+    color: #6c584c;
+    background: #faf7f2;
+}

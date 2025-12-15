@@ -7,37 +7,42 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="@(Model.GoldPriceId == 0 ? "Create" : "Edit")" method="post">
-    @if (Model.GoldPriceId != 0)
-    {
-        <input type="hidden" asp-for="GoldPriceId" />
-    }
+<div x-data x-init="new AutoNumeric($refs.price, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 2 })">
+    <form asp-action="@(Model.GoldPriceId == 0 ? "Create" : "Edit")" method="post">
+        @if (Model.GoldPriceId != 0)
+        {
+            <input type="hidden" asp-for="GoldPriceId" />
+        }
 
-    <div class="mb-3">
-        <label>Công ty</label>
-        <select asp-for="CompanyId" asp-items="ViewBag.Companies" class="form-select"></select>
-    </div>
+        <div class="mb-3">
+            <label>Công ty</label>
+            <select asp-for="CompanyId" asp-items="ViewBag.Companies" class="form-select"></select>
+        </div>
 
-    <div class="mb-3">
-        <label>Loại vàng</label>
-        <select asp-for="GoldTypeId" asp-items="ViewBag.GoldTypes" class="form-select"></select>
-    </div>
+        <div class="mb-3">
+            <label>Loại vàng</label>
+            <select asp-for="GoldTypeId" asp-items="ViewBag.GoldTypes" class="form-select"></select>
+        </div>
 
-    <div class="mb-3">
-        <label>Ngày</label>
-        <input asp-for="ApplyDate" type="date" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label>Ngày</label>
+            <input asp-for="ApplyDate" type="date" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label>Giá mua</label>
-        <input asp-for="BuyPrice" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label>Giá mua</label>
+            <input x-ref="price" asp-for="BuyPrice" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label>Giá bán</label>
-        <input asp-for="SellPrice" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label>Giá bán</label>
+            <input x-ref="price" asp-for="SellPrice" class="form-control" />
+        </div>
 
-    <button type="submit" class="btn btn-success">Lưu</button>
-    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
-</form>
+        <button type="submit" class="btn btn-success">Lưu</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
+
+
+

@@ -21,6 +21,7 @@ namespace GoldPrice.Models
         public int SortOrder { get; set; } = 1;
         public Company? Company { get; set; }
         public GoldType? GoldType { get; set; }
+        public ICollection<GoldPriceLog>? GoldPriceLogs { get; set; }
 
     }
 }

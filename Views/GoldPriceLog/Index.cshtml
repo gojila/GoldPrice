@@ -1,0 +1,51 @@
+﻿@using GoldPrice.Models.Dto
+@model IEnumerable<GoldPriceLogViewModelDto>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Nhật ký giá vàng";
+}
+
+<div>
+    <h2>Nhật ký giá vàng</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Công ty</th>
+                <th>Loại vàng</th>
+                <th>Giá mua - Cũ</th>
+                <th>Giá bán - Cũ</th>
+                <th>Giá mua - Mới</th>
+                <th>Giá bán - Mới</th>
+                <th>Ghi chú</th>
+                <th>Ngày</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var g in Model)
+            {
+                <td>@g.CompanyName</td>
+                <td>@g.GoldTypeName</td>
+                <td>@g.OldBuyPrice.ToString("N0")</td>
+                <td>@g.OldSellPrice.ToString("N0")</td>
+                <td>@g.NewBuyPrice.ToString("N0")</td>
+                <td>@g.NewSellPrice.ToString("N0")</td>
+                <td>@g.Remark</td>
+                <td>@g.CreatedDate?.ToString("dd/MM/yyyy")</td>
+            }
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination pagination-sm">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link"
+                       href="@Url.Action("Logs", new { page = i, pageSize = ViewBag.PageSize })">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

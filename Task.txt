@@ -1,0 +1,5 @@
+﻿- Set numeric for sell and buying price
+- Change font-size for admin side
+- Set maximium size for modal
+- Add phone no. on Company info
+- Add ordering button on main screen

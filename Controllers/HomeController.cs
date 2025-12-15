@@ -28,5 +28,18 @@ namespace GoldPrice.Controllers
             return View(data);
         }
 
+        public async Task<IActionResult> Index1()
+        {
+            var data = await _context.GoldPrices
+                .Include(x => x.Company)
+                .Include(x => x.GoldType)
+                .OrderByDescending(x => x.ApplyDate)
+                .ToListAsync();
+
+            ViewBag.Company = await _context.Companies.OrderByDescending(c => c.IsDefault).ThenByDescending(c => c.CreatedDate).FirstOrDefaultAsync();
+
+            return View(data);
+        }
+
     }
 }
