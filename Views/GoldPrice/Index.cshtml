@@ -9,20 +9,20 @@
 
      GoldPriceId: 0,
      GoldTypeName: '' ,
-     BuyPrice: '' ,
-     SellPrice: '' ,
+     BuyPrice: 0 ,
+     SellPrice: 0 ,
      IsBuyUpdating: false,
      IsSellUpdating: false,
      ModifiedDate: new Date().toISOString().substring(0,10),
      submitted: false,
-
-     init() {
-         this.$nextTick(()=>{
-            //this.buyAuto = new AutoNumeric($refs.BuyPrice, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 0 });
-            //this.sellAuto = new AutoNumeric($refs.SellPrice, { digitGroupSeparator: ',', decimalCharacter: '.', decimalPlaces: 0 });
-            //flatpickr(this.$refs.datepicker, { dateFormat: 'd/m/Y' });
-            });
-        },
+     //anElement: null,
+     anInstances: [],
+     
+init(){
+    
+},
+     
+     
 
         async openEditModal(id) {
             const res = await fetch(`/goldprice/get/${id}`);
@@ -109,8 +109,7 @@
                 this.selectedIds = [];
             }
         },
-    }"
-    x-init="init()">
+    }">
     <h2>Bảng giá vàng</h2>
     <p>
         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addGoldTypeModal">Thêm</button>
@@ -167,7 +166,7 @@
                     </div>
                     <div class="mb-3">
                         <label>Giá mua</label>
-                        <input type="text" x-ref="BuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end" x-model="BuyPrice" placeholder="VD: 7450000">
+                        <input type="text" x-ref="refBuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end autonumeric-input" x-model="BuyPrice" placeholder="VD: 7450000">
                     </div>
                     <div class="mb-3">
                         <label>Giá mua đang cập nhật</label>
@@ -175,7 +174,7 @@
                     </div>
                     <div class="mb-3">
                         <label>Giá bán</label>
-                        <input type="text" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end" x-model="SellPrice" placeholder="VD: 7500000">
+                        <input type="text" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end autonumeric-input" x-model.lazy="SellPrice" placeholder="VD: 7500000">
                     </div>
                     <div class="mb-3">
                         <label>Giá bán đang cập nhật</label>

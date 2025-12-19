@@ -1,4 +1,10 @@
-﻿html, body {
+﻿@media (min-width: 1920px) {
+    body {
+        zoom: 0.5;
+    }
+}
+
+html, body {
     height: 100%;
     margin: 0;
 }
