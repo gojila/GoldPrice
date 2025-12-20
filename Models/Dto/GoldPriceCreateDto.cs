@@ -8,5 +8,6 @@
         public decimal SellPrice { get; set; }
         public bool IsBuyUpdating { get; set; }
         public bool IsSellUpdating { get; set; }
+        public int SortOrder { get; set; }
     }
 }

@@ -14,15 +14,9 @@
      IsBuyUpdating: false,
      IsSellUpdating: false,
      ModifiedDate: new Date().toISOString().substring(0,10),
+     SortOrder: 1,
      submitted: false,
-     //anElement: null,
-     anInstances: [],
-     
-init(){
-    
-},
-     
-     
+     isLoading: false,
 
         async openEditModal(id) {
             const res = await fetch(`/goldprice/get/${id}`);
@@ -32,23 +26,23 @@ init(){
             this.GoldTypeName = data.goldTypeName;
             this.BuyPrice = data.buyPrice;
             this.SellPrice = data.sellPrice;
-            //this.buyAuto.set(data.buyPrice);
-            //this.sellAuto.set(data.sellPrice);
             this.IsBuyUpdating = data.isBuyUpdating;
             this.IsSellUpdating = data.isSellUpdating;
-
+            this.SortOrder = data.sortOrder;
             new bootstrap.Modal(document.getElementById('addGoldTypeModal')).show();
         },
 
         async saveGoldType() {
             try{
+                if (this.isLoading) return;
                 this.submitted = true;
 
                 if (!this.GoldTypeName) {
-                    alert('Vui lòng nhập loại vàng');
+                    showToast('error', 'Vui lòng nhập loại vàng' );
                     return;
                 }
 
+                this.isLoading=true;
                 const res = await fetch('/goldprice/post_create', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -60,23 +54,28 @@ init(){
                         BuyPrice: parseFloat(this.BuyPrice) || 0,
                         SellPrice: parseFloat(this.SellPrice) || 0,
                         IsBuyUpdating: this.IsBuyUpdating,
-                        IsSellUpdating: this.IsSellUpdating
+                        IsSellUpdating: this.IsSellUpdating,
+                        SortOrder: this.SortOrder
                     })
                 });
 
                 if (res.ok) {
-                    alert('Lưu thành công!');
+                    showToast('success', 'Lưu loại vàng thành công' );
                     const modalEl = document.getElementById('addGoldTypeModal');
                     const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
                     modal.hide();
-                    window.location.reload();
+                    setTimeout(() => window.location.reload(), 1000);
+                    //window.location.reload();
                 } else {
                     const errText = await res.text();
-                    alert('Lỗi: ' + errText);
+                    showToast('error', err || 'Lưu thất bại' );
                 }
             }
             catch(e){
-                alert('Lỗi kết nối: ' + e.message);
+                showToast('error', 'Lỗi kết nối server' );
+            }
+            finally {
+                this.isLoading = false;
             }
         },
 
@@ -127,6 +126,7 @@ init(){
                 <th>Giá mua</th>
                 <th>Giá bán</th>
                 <th>Ngày</th>
+                <th>Thứ tự</th>
                 <th>Hiển thị</th>
             </tr>
         </thead>
@@ -145,6 +145,7 @@ init(){
                         <button class="btn btn-sm btn-warning" x-on:click="openEditModal(@g.GoldPriceId)">Sửa</button>
                         @* <a class="btn btn-sm btn-danger" href="/goldprice/delete/@g.GoldPriceId" onclick="return confirm('Xóa loại vàng này?')">Xóa</a> *@
                     </td>
+                    <td>@g.SortOrder</td>
                 </tr>
             }
         </tbody>
@@ -152,8 +153,17 @@ init(){
 
     <!-- Modal thêm loại vàng -->
     <div class="modal fade" id="addGoldTypeModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
+                <!-- Loading overlay -->
+                <div x-show="isLoading"
+                     x-transition.opacity
+                     class="loading-overlay">
+                    <div class="spinner-border text-warning" style="width: 4rem; height: 4rem;"></div>
+                    <div class="mt-3 fs-4 fw-bold text-warning">
+                        Đang lưu dữ liệu...
+                    </div>
+                </div>
                 <div class="modal-header">
                     <h5 class="modal-title" id="addModalLabel">Thêm loại vàng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -166,7 +176,7 @@ init(){
                     </div>
                     <div class="mb-3">
                         <label>Giá mua</label>
-                        <input type="text" x-ref="refBuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end autonumeric-input" x-model="BuyPrice" placeholder="VD: 7450000">
+                        <input type="text" x-mask:dynamic="$money($input, '.', ',', 0)" x-ref="refBuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end autonumeric-input" x-model="BuyPrice" placeholder="VD: 7450000">
                     </div>
                     <div class="mb-3">
                         <label>Giá mua đang cập nhật</label>
@@ -174,11 +184,15 @@ init(){
                     </div>
                     <div class="mb-3">
                         <label>Giá bán</label>
-                        <input type="text" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end autonumeric-input" x-model.lazy="SellPrice" placeholder="VD: 7500000">
+                        <input type="text" x-mask:dynamic="$money($input, '.', ',', 0)" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end autonumeric-input" x-model.lazy="SellPrice" placeholder="VD: 7500000">
                     </div>
                     <div class="mb-3">
                         <label>Giá bán đang cập nhật</label>
                         <input type="checkbox" x-model="IsSellUpdating">
+                    </div>
+                    <div class="mb-3">
+                        <label>Sắp xếp</label>
+                        <input type="number" x-ref="refSortOrder" class="form-control text-end autonumeric-input" x-model="SortOrder" placeholder="1">
                     </div>
                 </div>
                 <div class="modal-footer">

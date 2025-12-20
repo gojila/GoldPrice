@@ -1,10 +1,12 @@
 ﻿using GoldPrice.Data;
 using GoldPrice.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoldPrice.Controllers
 {
+    [Authorize]
     public class GoldTypeController : Controller
     {
         private readonly AppDbContext _context;

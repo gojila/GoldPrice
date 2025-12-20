@@ -1,0 +1,16 @@
+﻿.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 1056; /* cao hơn modal-content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast {
+    font-size: 1.4rem;
+    min-width: 320px;
+}
+

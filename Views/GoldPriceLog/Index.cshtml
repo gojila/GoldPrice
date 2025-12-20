@@ -24,14 +24,16 @@
         <tbody>
             @foreach (var g in Model)
             {
-                <td>@g.CompanyName</td>
-                <td>@g.GoldTypeName</td>
-                <td>@g.OldBuyPrice.ToString("N0")</td>
-                <td>@g.OldSellPrice.ToString("N0")</td>
-                <td>@g.NewBuyPrice.ToString("N0")</td>
-                <td>@g.NewSellPrice.ToString("N0")</td>
-                <td>@g.Remark</td>
-                <td>@g.CreatedDate?.ToString("dd/MM/yyyy")</td>
+                <tr>
+                    <td>@g.CompanyName</td>
+                    <td>@g.GoldTypeName</td>
+                    <td>@g.OldBuyPrice.ToString("N0")</td>
+                    <td>@g.OldSellPrice.ToString("N0")</td>
+                    <td>@g.NewBuyPrice.ToString("N0")</td>
+                    <td>@g.NewSellPrice.ToString("N0")</td>
+                    <td>@g.Remark</td>
+                    <td>@g.CreatedDate?.ToString("dd/MM/yyyy")</td>
+                </tr>
             }
         </tbody>
     </table>

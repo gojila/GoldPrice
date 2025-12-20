@@ -12,8 +12,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Tên loại vàng</th>
+            <th>Ghi chú</th>
             <th></th>
         </tr>
     </thead>
@@ -21,8 +21,8 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.GoldTypeId</td>
                 <td>@item.GoldTypeName</td>
+                <td>@item.Remark</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.GoldTypeId" class="btn btn-sm btn-warning">Sửa</a>
                 </td>

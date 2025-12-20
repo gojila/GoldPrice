@@ -1,11 +1,13 @@
 ﻿using GoldPrice.Data;
 using GoldPrice.Models;
 using GoldPrice.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoldPrice.Controllers
 {
+    [Authorize]
     public class GoldPriceLogController : Controller
     {
         private readonly AppDbContext _context;
@@ -14,7 +16,7 @@ namespace GoldPrice.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 50)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 20)
         {
             if (page < 1) page = 1;
             var query = _context.GoldPriceLogs

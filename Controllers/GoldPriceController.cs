@@ -1,12 +1,15 @@
 ﻿using GoldPrice.Data;
 using GoldPrice.Models;
 using GoldPrice.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoldPrice.Controllers
 {
+    [Authorize]
     public class GoldPriceController : Controller
     {
         private readonly AppDbContext _context;
@@ -22,17 +25,18 @@ namespace GoldPrice.Controllers
                 .Include(g => g.Company)
                 .Include(g => g.GoldType)
                 .Where(g => !g.IsDeleted)
-                .OrderByDescending(g => g.ApplyDate)
+                .OrderBy(g => g.SortOrder)
+                .ThenByDescending(g => g.ApplyDate)
                 .ToListAsync();
             return View(prices);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            await LoadDropdowns();
-            return View(new GoldPrice.Models.GoldPrice());
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Create()
+        //{
+        //    await LoadDropdowns();
+        //    return View(new GoldPrice.Models.GoldPrice());
+        //}
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
@@ -77,6 +81,7 @@ namespace GoldPrice.Controllers
                     goldPrice.IsBuyUpdating = dto.IsBuyUpdating;
                     goldPrice.IsSellUpdating = dto.IsSellUpdating;
                     goldPrice.ApplyDate = DateTime.Now;
+                    goldPrice.SortOrder = dto.SortOrder;
 
                     _context.Add(goldPrice);
 
@@ -108,6 +113,7 @@ namespace GoldPrice.Controllers
                         goldPrice.IsBuyUpdating = dto.IsBuyUpdating;
                         goldPrice.IsSellUpdating = dto.IsSellUpdating;
                         goldPrice.ApplyDate = DateTime.Now;
+                        goldPrice.SortOrder = dto.SortOrder;
 
                         _context.GoldPriceLogs.Add(new GoldPriceLog
                         {
@@ -144,7 +150,8 @@ namespace GoldPrice.Controllers
                         buyPrice = x.BuyPrice,
                         sellPrice = x.SellPrice,
                         isBuyUpdating = x.IsBuyUpdating,
-                        isSellUpdating = x.IsSellUpdating
+                        isSellUpdating = x.IsSellUpdating,
+                        sortOrder = x.SortOrder
                     })
                     .FirstOrDefaultAsync();
 
@@ -159,52 +166,52 @@ namespace GoldPrice.Controllers
             
         }
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            var item = await _context.GoldPrices.FindAsync(id);
-            if (item == null) return NotFound();
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    var item = await _context.GoldPrices.FindAsync(id);
+        //    if (item == null) return NotFound();
 
-            await LoadDropdowns();
-            return View(item);
-        }
+        //    await LoadDropdowns();
+        //    return View(item);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, GoldPrice.Models.GoldPrice model)
-        {
-            if (id != model.GoldPriceId) return NotFound();
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, GoldPrice.Models.GoldPrice model)
+        //{
+        //    if (id != model.GoldPriceId) return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                var entity = await _context.GoldPrices.FindAsync(id);
-                if (entity == null) return NotFound();
+        //    if (ModelState.IsValid)
+        //    {
+        //        var entity = await _context.GoldPrices.FindAsync(id);
+        //        if (entity == null) return NotFound();
 
-                // Log thay đổi
-                if (entity.BuyPrice != model.BuyPrice || entity.SellPrice != model.SellPrice)
-                {
-                    _context.GoldPriceLogs.Add(new GoldPriceLog
-                    {
-                        GoldPriceId = entity.GoldPriceId,
-                        OldBuyPrice = entity.BuyPrice,
-                        OldSellPrice = entity.SellPrice,
-                        NewBuyPrice = model.BuyPrice,
-                        NewSellPrice = model.SellPrice,
-                    });
-                }
+        //        // Log thay đổi
+        //        if (entity.BuyPrice != model.BuyPrice || entity.SellPrice != model.SellPrice)
+        //        {
+        //            _context.GoldPriceLogs.Add(new GoldPriceLog
+        //            {
+        //                GoldPriceId = entity.GoldPriceId,
+        //                OldBuyPrice = entity.BuyPrice,
+        //                OldSellPrice = entity.SellPrice,
+        //                NewBuyPrice = model.BuyPrice,
+        //                NewSellPrice = model.SellPrice,
+        //            });
+        //        }
 
-                entity.CompanyId = model.CompanyId;
-                entity.GoldTypeId = model.GoldTypeId;
-                entity.BuyPrice = model.BuyPrice;
-                entity.SellPrice = model.SellPrice;
-                entity.ApplyDate = model.ApplyDate;
+        //        entity.CompanyId = model.CompanyId;
+        //        entity.GoldTypeId = model.GoldTypeId;
+        //        entity.BuyPrice = model.BuyPrice;
+        //        entity.SellPrice = model.SellPrice;
+        //        entity.ApplyDate = model.ApplyDate;
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            await LoadDropdowns();
-            return View(model);
-        }
+        //    await LoadDropdowns();
+        //    return View(model);
+        //}
 
         [HttpPost]
         [Route("goldprice/delete")]
@@ -236,9 +243,7 @@ namespace GoldPrice.Controllers
             { 
                 return BadRequest(ex.Message);
             }
-            
         }
-
 
         private async Task LoadDropdowns()
         {

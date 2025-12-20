@@ -33,17 +33,17 @@
         <table class="flex-fill">
             <thead>
                 <tr>
-                    <th class="left">Loại vàng</th>
-                    <th class="right">Giá mua vào</th>
-                    <th class="right">Giá bán ra</th>
-                    <th class="right">Ngày cập nhật</th>
+                    <th class="left">LOẠI VÀNG</th>
+                    <th class="right">GIÁ MUA VÀO</th>
+                    <th class="right">GIÁ BÁN RA</th>
+                    <th class="right">NGÀY CẬP NHẬT</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="left">@item.GoldType?.GoldTypeName</td>
+                        <td class="left">@item.GoldType?.GoldTypeName.ToUpper()</td>
                         <td class="right buy">@item.BuyPrice.ToString("N0")</td>
                         <td class="right sell">@item.SellPrice.ToString("N0")</td>
                         <td class="right">@item.ApplyDate.ToString("dd/MM/yyyy HH:mm")</td>
