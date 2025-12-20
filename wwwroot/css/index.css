@@ -11,6 +11,7 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 /* === COMPANY HEADER === */
@@ -21,21 +22,21 @@ body {
 }
 
 .company-name {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 800;
     color: #8b5e34;
     letter-spacing: 2px;
 }
 
 .company-meta {
-    font-size: 2.2rem;
+    font-size: 2.0rem;
     color: #5a4632;
     margin-top: 8px;
 }
 
 /* === TITLE === */
 .price-title {
-    font-size: 2.4rem;
+    font-size: 2.1rem;
     font-weight: 700;
     margin: 25px 0 15px;
     color: #a87928;
@@ -55,14 +56,14 @@ thead {
 }
 
 th {
-    font-size: 2.3rem;
-    padding: 18px;
+    font-size: 2.1rem;
+    padding: 14px;
     border-bottom: 3px solid #c59d5f;
 }
 
 td {
-    font-size: 2.5rem;
-    padding: 16px;
+    font-size: 2.3rem;
+    padding: 12px;
     border-bottom: 1px solid #e2d4bc;
 }
 
@@ -92,8 +93,8 @@ tbody tr:last-child td {
 
 /* === FOOTER === */
 .updated-time {
-    margin-top: 18px;
-    font-size: 2.4rem;
+    margin-top: 0px;
+    font-size: 2.0rem;
     color: #6c584c;
 }
 
@@ -103,4 +104,17 @@ tbody tr:last-child td {
     font-size: 1.4rem;
     color: #6c584c;
     background: #faf7f2;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.price-container {
+    flex: 1; /* chiếm phần còn lại */
+    display: flex;
+    align-items: center; /* căn giữa dọc */
+    padding: 0 10px 0 10px;
+}
+

@@ -29,27 +29,29 @@
         BẢNG GIÁ VÀNG HÔM NAY – @DateTime.Now.ToString("dd/MM/yyyy")
     </div>
 
-    <table class="flex-fill">
-        <thead>
-            <tr>
-                <th class="left">Loại vàng</th>
-                <th class="right">Giá mua vào</th>
-                <th class="right">Giá bán ra</th>
-                <th class="right">Ngày cập nhật</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <main class="price-container">
+        <table class="flex-fill">
+            <thead>
                 <tr>
-                    <td class="left">@item.GoldType?.GoldTypeName</td>
-                    <td class="right buy">@item.BuyPrice.ToString("N0")</td>
-                    <td class="right sell">@item.SellPrice.ToString("N0")</td>
-                    <td class="right">@item.ApplyDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <th class="left">Loại vàng</th>
+                    <th class="right">Giá mua vào</th>
+                    <th class="right">Giá bán ra</th>
+                    <th class="right">Ngày cập nhật</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="left">@item.GoldType?.GoldTypeName</td>
+                        <td class="right buy">@item.BuyPrice.ToString("N0")</td>
+                        <td class="right sell">@item.SellPrice.ToString("N0")</td>
+                        <td class="right">@item.ApplyDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </main>
 
     <footer class="border-top footer">
         <div class="updated-time">
