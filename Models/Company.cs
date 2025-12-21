@@ -8,17 +8,17 @@ namespace GoldPrice.Models
         public int CompanyId { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(250)")]
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
         [Column(TypeName = "nvarchar(250)")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
         [Column(TypeName = "nvarchar(250)")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
         [Column(TypeName = "nvarchar(250)")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Column(TypeName = "nvarchar(250)")]
-        public string Website { get; set; }
+        public string? Website { get; set; }
         [Column(TypeName = "nvarchar(250)")]
-        public string TaxCode { get; set; }
+        public string? TaxCode { get; set; }
         public bool IsDefault { get; set; }
     }
 }

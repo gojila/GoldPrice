@@ -166,28 +166,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label>Loại vàng</label>
+                        <label class="form-label">Loại vàng</label>
                         <input type="text" class="form-control" x-model.trim="GoldTypeName" :class="{ 'is-invalid': submitted && !GoldTypeName }" placeholder="VD: Vàng SJC 9999">
                         <div class="invalid-feedback">Vui lòng nhập loại vàng</div>
                     </div>
                     <div class="mb-3">
-                        <label>Giá mua</label>
+                        <label class="form-label">Giá mua</label>
                         <input type="text" x-mask:dynamic="$money($input, '.', ',', 0)" x-ref="refBuyPrice" x-bind:disabled="IsBuyUpdating" class="form-control text-end autonumeric-input" x-model="BuyPrice" placeholder="VD: 7450000">
                     </div>
                     <div class="mb-3">
-                        <label>Giá mua đang cập nhật</label>
+                        <label class="form-label">Giá mua đang cập nhật</label>
                         <input type="checkbox" x-model="IsBuyUpdating">
                     </div>
                     <div class="mb-3">
-                        <label>Giá bán</label>
+                        <label class="form-label">Giá bán</label>
                         <input type="text" x-mask:dynamic="$money($input, '.', ',', 0)" x-ref="SellPrice" x-bind:disabled="IsSellUpdating" class="form-control text-end autonumeric-input" x-model.lazy="SellPrice" placeholder="VD: 7500000">
                     </div>
                     <div class="mb-3">
-                        <label>Giá bán đang cập nhật</label>
+                        <label class="form-label">Giá bán đang cập nhật</label>
                         <input type="checkbox" x-model="IsSellUpdating">
                     </div>
                     <div class="mb-3">
-                        <label>Sắp xếp</label>
+                        <label class="form-label">Sắp xếp</label>
                         <input type="number" x-ref="refSortOrder" class="form-control text-end autonumeric-input" x-model="SortOrder" placeholder="1">
                     </div>
                 </div>

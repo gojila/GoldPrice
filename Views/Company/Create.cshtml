@@ -10,36 +10,38 @@
 <form action="@(Model?.CompanyId == 0 ? Url.Action("Create", "Company") : Url.Action("Edit", "Company"))" method="post">
     @Html.AntiForgeryToken()
     
-    @if (Model.CompanyId != 0)
+    @if (Model?.CompanyId != 0)
     {
         <input asp-for="CompanyId" type="hidden" />
     }
 
     <div class="form-group">
-        <label>Tên công ty</label>
+        <label class="form-label">Tên công ty</label>
         <input asp-for="CompanyName" class="form-control" />
     </div>
     <div class="form-group">
-        <label>Địa chỉ</label>
+        <label class="form-label">Địa chỉ</label>
         <input asp-for="Address" class="form-control" />
     </div>
     <div class="form-group">
-        <label>Điện thoại</label>
+        <label class="form-label">Điện thoại</label>
         <input asp-for="Phone" class="form-control" />
     </div>
     <div class="form-group">
-        <label>Email</label>
+        <label class="form-label">Email</label>
         <input asp-for="Email" class="form-control" />
     </div>
     <div class="form-group">
-        <label>Website</label>
+        <label class="form-label">Website</label>
         <input asp-for="Website" class="form-control" />
     </div>
     <div class="form-group">
-        <label>Mã số thuế</label>
+        <label class="form-label">Mã số thuế</label>
         <input asp-for="TaxCode" class="form-control" />
     </div>
     
-    <button type="submit" class="btn btn-primary">Lưu</button>
-    <a href="@Url.Action("Index", "Company")" class="btn btn-secondary">Quay lại</a>
+    <div class="form-group" style="padding-top: 10px;">
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a href="@Url.Action("Index", "Company")" class="btn btn-secondary">Quay lại</a>
+    </div>
 </form>

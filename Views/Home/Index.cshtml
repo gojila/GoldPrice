@@ -19,10 +19,10 @@
 
     <div class="company-wrapper">
         <div class="company-name">
-            @ViewBag.Company.CompanyName
+            @ViewBag.Company.CompanyName.ToString().ToUpper()
         </div>
         <div class="company-meta">
-            📍 @ViewBag.Company.Address &nbsp;&nbsp;|&nbsp;&nbsp;
+            📍 @ViewBag.Company.Address.ToString().ToUpper() &nbsp;&nbsp;|&nbsp;&nbsp;
             ☎ @ViewBag.Company.Phone
         </div>
     </div>
