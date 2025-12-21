@@ -60,11 +60,12 @@ namespace GoldPrice.Controllers
                 if (entity == null) return NotFound();
 
                 entity.GoldTypeName = model.GoldTypeName;
+                entity.Remark = model.Remark;
                 entity.ModifiedBy = "admin";
                 entity.ModifiedDate = DateTime.Now;
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "GoldType");
             }
             return View("Create", model);
         }

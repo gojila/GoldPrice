@@ -7,7 +7,14 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="asp-action=@(Model?.CompanyId == 0 ? "Create" : "Edit")" method="post">
+<form action="@(Model?.CompanyId == 0 ? Url.Action("Create", "Company") : Url.Action("Edit", "Company"))" method="post">
+    @Html.AntiForgeryToken()
+    
+    @if (Model.CompanyId != 0)
+    {
+        <input asp-for="CompanyId" type="hidden" />
+    }
+
     <div class="form-group">
         <label>Tên công ty</label>
         <input asp-for="CompanyName" class="form-control" />
@@ -32,6 +39,7 @@
         <label>Mã số thuế</label>
         <input asp-for="TaxCode" class="form-control" />
     </div>
+    
     <button type="submit" class="btn btn-primary">Lưu</button>
-    <a href="/Company" class="btn btn-secondary">Quay lại</a>
+    <a href="@Url.Action("Index", "Company")" class="btn btn-secondary">Quay lại</a>
 </form>

@@ -14,13 +14,13 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/Admin">🏠 Quản trị</a>
+            <a class="navbar-brand" asp-action="Index" asp-controller="Admin">🏠 Quản trị</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/Company">🏢 Công ty</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/GoldType">🪙 Loại vàng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/GoldPrice">💰 Giá vàng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/GoldPriceLog">📜 Nhật ký</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Company">🏢 Công ty</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="GoldType">🪙 Loại vàng</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="GoldPrice">💰 Giá vàng</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="GoldPriceLog">📜 Nhật ký</a></li>
                 </ul>
             </div>
             <!-- RIGHT -->
@@ -32,12 +32,12 @@
                 </span>
 
                 <!-- HOME -->
-                <a href="/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm">
+                <a asp-action="Index" asp-controller="Home" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light btn-sm">
                     🏠 Trang chủ
                 </a>
 
                 <!-- LOGOUT -->
-                <form method="post" action="/Account/Logout" class="m-0">
+                <form method="post" asp-action="Logout" asp-controller="Account" class="m-0">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="btn btn-danger btn-sm">
                         🚪 Logout

@@ -112,7 +112,7 @@
 
 <body>
 
-    <form method="post" action="/Account/Login" class="login-card">
+    <form method="post" asp-action="Login" asp-controller="Account" class="login-card">
         @Html.AntiForgeryToken()
 
         <div class="brand">

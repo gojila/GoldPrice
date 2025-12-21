@@ -19,7 +19,7 @@
      isLoading: false,
 
         async openEditModal(id) {
-            const res = await fetch(`/goldprice/get/${id}`);
+            const res=await fetch(`@Url.Action("Get", "GoldPrice")/${id}`);
             const data = await res.json();
 
             this.GoldPriceID = id;
@@ -43,16 +43,14 @@
                 }
 
                 this.isLoading=true;
-                const res = await fetch('/goldprice/post_create', {
+                    const res=await fetch('@Url.Action("post_create", "GoldPrice")', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         GoldPriceID: this.GoldPriceID,
                         GoldTypeName: this.GoldTypeName,
-                        //BuyPrice: parseFloat(this.BuyPrice.replace(/,/g, '')) || 0,
-                        //SellPrice: parseFloat(this.SellPrice.replace(/,/g, '')) || 0,
-                        BuyPrice: parseFloat(this.BuyPrice) || 0,
-                        SellPrice: parseFloat(this.SellPrice) || 0,
+                        BuyPrice: parseFloat(this.BuyPrice.replace( /,/g, '' )) || 0,
+                        SellPrice: parseFloat(this.SellPrice.replace( /,/g, '' )) || 0,
                         IsBuyUpdating: this.IsBuyUpdating,
                         IsSellUpdating: this.IsSellUpdating,
                         SortOrder: this.SortOrder
@@ -83,7 +81,7 @@
             if (!confirm(`Bạn có chắc muốn xóa ${this.selectedIds.length} dòng?`))
                 return;
 
-            const res = await fetch('/goldprice/delete', {
+            const res = await fetch('@Url.Action("delete", "GoldPrice")', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.selectedIds)
@@ -141,9 +139,7 @@
                     <td>@g.SellPrice.ToString("N0")</td>
                     <td>@g.ApplyDate.ToString("dd/MM/yyyy")</td>
                     <td>
-                        @* <a asp-action="Edit" asp-route-id="@g.GoldPriceId" class="btn btn-sm btn-warning">Sửa</a> *@
                         <button class="btn btn-sm btn-warning" x-on:click="openEditModal(@g.GoldPriceId)">Sửa</button>
-                        @* <a class="btn btn-sm btn-danger" href="/goldprice/delete/@g.GoldPriceId" onclick="return confirm('Xóa loại vàng này?')">Xóa</a> *@
                     </td>
                     <td>@g.SortOrder</td>
                 </tr>

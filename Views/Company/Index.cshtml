@@ -8,7 +8,7 @@
 <h2>@ViewData["Title"]</h2>
 
 <p>
-    <a class="btn btn-primary" href="/Company/Create">+ Thêm công ty</a>
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Company">+ Thêm công ty</a>
 </p>
 
 <table class="table table-striped">
@@ -34,8 +34,8 @@
                 <td>@item.Website</td>
                 <td>@item.TaxCode</td>
                 <td>
-                    <a class="btn btn-sm btn-warning" href="/Company/Create/@item.CompanyId">Sửa</a>
-                    <a class="btn btn-sm btn-danger" href="/Company/Delete/@item.CompanyId" onclick="return confirm('Xóa công ty này?')">Xóa</a>
+                    <a class="btn btn-sm btn-warning" href="@Url.Action("Create", "Company", new { id = item.CompanyId })">Sửa</a>
+                    <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Company", new { id = item.CompanyId })" onclick="return confirm('Xóa công ty này?')">Xóa</a>
                 </td>
             </tr>
         }

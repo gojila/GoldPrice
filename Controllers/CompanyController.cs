@@ -82,9 +82,9 @@ namespace GoldPrice.Controllers
                 existing.ModifiedDate = DateTime.Now;
 
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Company");
             }
-            return View(company);
+            return RedirectToAction("Create","Company", company.CompanyId);
         }
 
         // GET: Company/Delete/5
@@ -98,7 +98,7 @@ namespace GoldPrice.Controllers
             company.DeletedDate = DateTime.Now;
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Company");
         }
     }
 }

@@ -7,7 +7,9 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="@(Model.GoldTypeId == 0 ? "Create" : "Edit")" method="post">
+<form action="@(Model.GoldTypeId == 0 ? Url.Action("Create", "GoldType") : Url.Action("Edit", "GoldType"))" method="post">
+    @Html.AntiForgeryToken()
+
     @if (Model.GoldTypeId != 0)
     {
         <input type="hidden" asp-for="GoldTypeId" />
@@ -25,5 +27,5 @@
     </div>
 
     <button type="submit" class="btn btn-success">Lưu</button>
-    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    <a href="@Url.Action("Index","GoldType")" class="btn btn-secondary">Quay lại</a>
 </form>
