@@ -6,7 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" http-equiv="refresh" content="30" />
+    @* <meta charset="utf-8" http-equiv="refresh" content="30" /> *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Bảng giá vàng</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -30,13 +32,13 @@
     </div>
 
     <main class="price-container">
-        <table class="flex-fill">
+        <table class="flex-fill price-table">
             <thead>
                 <tr>
                     <th class="left">LOẠI VÀNG</th>
                     <th class="right">GIÁ MUA VÀO</th>
                     <th class="right">GIÁ BÁN RA</th>
-                    <th class="right">NGÀY CẬP NHẬT</th>
+                    @* <th class="right">NGÀY CẬP NHẬT</th> *@
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +48,7 @@
                         <td class="left">@item.GoldType?.GoldTypeName.ToUpper()</td>
                         <td class="right buy">@item.BuyPrice.ToString("N0")</td>
                         <td class="right sell">@item.SellPrice.ToString("N0")</td>
-                        <td class="right">@item.ApplyDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        @* <td class="right">@item.ApplyDate.ToString("dd/MM/yyyy HH:mm")</td> *@
                     </tr>
                 }
             </tbody>

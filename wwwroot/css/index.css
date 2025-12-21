@@ -115,6 +115,163 @@ tbody tr:last-child td {
     flex: 1; /* chiếm phần còn lại */
     display: flex;
     align-items: center; /* căn giữa dọc */
-    padding: 0 10px 0 10px;
+    padding: 10px 10px 10px 10px;
 }
+/* =============================
+   📱 PHONE (≤ 576px)
+============================= */
+/* For devices with a minimum width of 768px (Medium) */
+@media screen and (min-width: 1px) and (max-width: 576px) {
+    body {
+        overflow-y: auto;
+    }
+
+    th {
+        font-size: 0.8rem;
+    }
+
+    td {
+        font-size: 0.9rem;
+    }
+    .company-name {
+        font-size: 1.5rem;
+    }
+
+    .company-meta {
+        font-size: 1.2rem;
+    }
+
+    .company-wrapper{
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-title {
+        font-size: 1.8rem;
+    }
+
+    .updated-time {
+        font-size: 1.2rem;
+    }
+
+    .price-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* =============================
+   📲 iPad (577 – 991px)
+============================= */
+@media screen and (min-width: 577px) and (max-width: 991px) {
+    body {
+        overflow-y: auto;
+    }
+
+    th {
+        font-size: 1.8rem;
+    }
+
+    td {
+        font-size: 2.5rem;
+    }
+}
+
+/* =============================
+   💻 Laptop 14–15" (992 – 1439px)
+============================= */
+@media screen and (min-width: 992px) and (max-width: 1439px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .company-name {
+        font-size: 1.6rem;
+    }
+
+    .company-meta {
+        font-size: 1.4rem;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-title {
+        font-size: 1.5rem;
+        margin: 5px 0px 5px 0px; 
+    }
+
+    th {
+        font-size: 1.2rem;
+    }
+
+    td {
+        font-size: 1.3rem;
+    }
+
+    .updated-time {
+        font-size: 1.0rem;
+    }
+
+    .price-table {
+        width: 50% !important;
+        flex: 0 0 auto !important;
+    }
+}
+
+/* =============================
+   🖥️ Desktop 24–27" (1440 – 2559px)
+============================= */
+@media (min-width: 1440px) and (max-width: 2559px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-table {
+        width: 80% !important;
+        flex: 0 0 auto !important;
+    }
+}
+
+/* =============================
+   📺 TV 32–42" (≥ 2560px)
+============================= */
+@media (min-width: 2560px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .company-name {
+        font-size: 3.5rem;
+    }
+
+    .company-meta {
+        font-size: 3.0rem;
+    }
+
+    .price-title {
+        font-size: 3.5rem;
+    }
+
+    .price-table {
+        width: 80% !important;
+        flex: 0 0 auto !important;
+    }
+
+    th {
+        font-size: 4.0rem;
+    }
+
+    td {
+        font-size: 4.5rem;
+    }
+}
+
 
