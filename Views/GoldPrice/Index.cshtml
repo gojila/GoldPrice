@@ -49,8 +49,8 @@
                     body: JSON.stringify({
                         GoldPriceID: this.GoldPriceID,
                         GoldTypeName: this.GoldTypeName,
-                        BuyPrice: parseFloat(this.BuyPrice.replace( /,/g, '' )) || 0,
-                        SellPrice: parseFloat(this.SellPrice.replace( /,/g, '' )) || 0,
+                        BuyPrice: parseFloat(this.BuyPrice.toString().replace(/,/g, '' )) || 0,
+                        SellPrice: parseFloat(this.SellPrice.toString().replace( /,/g, '' )) || 0,
                         IsBuyUpdating: this.IsBuyUpdating,
                         IsSellUpdating: this.IsSellUpdating,
                         SortOrder: this.SortOrder
@@ -70,7 +70,7 @@
                 }
             }
             catch(e){
-                showToast('error', 'Lỗi kết nối server' );
+                showToast('error', 'Lỗi kết nối server: ' + e.message );
             }
             finally {
                 this.isLoading = false;
