@@ -42,6 +42,10 @@ body {
     color: #a87928;
 }
 
+.price-title .unit {
+    font-size: 1.5rem;
+}
+
 /* === TABLE === */
 table {
     width: 95%;
@@ -113,7 +117,7 @@ tbody tr:last-child td {
 
 .price-container {
     flex: 1; /* chiếm phần còn lại */
-    display: flex;
+    /*display: flex;*/
     align-items: center; /* căn giữa dọc */
     padding: 10px 10px 10px 10px;
 }
@@ -221,25 +225,49 @@ tbody tr:last-child td {
 /* =============================
    🖥️ Desktop 24–27" (1440 – 2559px)
 ============================= */
-@media (min-width: 1440px) and (max-width: 2559px) {
+@media screen and (min-width: 1440px) and (max-width: 2559px) {
     body {
         overflow-y: auto;
+    }
+
+    .company-name {
+        font-size: 2.3rem;
+    }
+
+    .company-meta {
+        font-size: 1.1rem;
     }
 
     .company-wrapper {
         padding: 5px 0px 5px 0px;
     }
 
-    .price-table {
-        width: 80% !important;
-        flex: 0 0 auto !important;
+    .price-title {
+        font-size: 2.4rem;
+        margin: 5px 0px 5px 0px;
+    }
+
+    th {
+        font-size: 3.0rem;
+    }
+
+    td {
+        font-size: 4.1rem;
+    }
+
+    .price-title .unit {
+        font-size: 1.3rem;
+    }
+
+    .updated-time{
+        font-size: 2.0rem;
     }
 }
 
 /* =============================
    📺 TV 32–42" (≥ 2560px)
 ============================= */
-@media (min-width: 2560px) {
+@media screen and (min-width: 2560px) {
     body {
         overflow-y: auto;
     }
@@ -258,7 +286,7 @@ tbody tr:last-child td {
 
     .price-title {
         font-size: 2.5rem;
-        margin: 5px 0px 5px 0px !important; 
+        margin: 5px 0px 5px 0px !important;
     }
 
     .price-table {
@@ -275,7 +303,7 @@ tbody tr:last-child td {
     }
 
     .updated-time {
-        font-size: 1.0rem;
+        font-size: 2.0rem;
     }
 }
 

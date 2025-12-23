@@ -13,6 +13,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href="~/css/index.css" rel="stylesheet" />
+    <link href="~/css/uitoogle.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -28,14 +30,14 @@
     </div>
 
     <div class="price-title">
-        BẢNG GIÁ VÀNG HÔM NAY – @DateTime.Now.ToString("dd/MM/yyyy")
+        BẢNG GIÁ VÀNG HÔM NAY <span class="unit">(ĐVT: VND/chỉ)</span>
     </div>
 
     <main class="price-container">
         <table class="flex-fill price-table">
             <thead>
                 <tr>
-                    <th class="left">LOẠI VÀNG - ĐVT: CHỈ</th>
+                    <th class="left">LOẠI VÀNG</th>
                     <th class="right">GIÁ MUA VÀO</th>
                     <th class="right">GIÁ BÁN RA</th>
                     @* <th class="right">NGÀY CẬP NHẬT</th> *@
@@ -59,6 +61,11 @@
         <div class="updated-time">
             &copy; @DateTime.Now.ToString("dd/MM/yyyy") - Bảng Giá Vàng Hôm Nay
         </div>
+        <div>
+            @Html.Partial("UIToogle")
+        </div>
     </footer>
+
+    <script src="~/js/uitoogle.js" asp-append-version="true"></script>
 </body>
 </html>

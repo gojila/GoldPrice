@@ -1,10 +1,11 @@
-using System.Diagnostics;
 using GoldPrice.Data;
 using GoldPrice.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace GoldPrice.Controllers
 {
@@ -12,9 +13,12 @@ namespace GoldPrice.Controllers
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
-        public HomeController(AppDbContext context)
+        private readonly ICompositeViewEngine _viewEngine;
+
+        public HomeController(AppDbContext context, ICompositeViewEngine viewEngine)
         {
             _context = context;
+            _viewEngine = viewEngine;
         }
 
         public async Task<IActionResult> Index()
@@ -28,7 +32,25 @@ namespace GoldPrice.Controllers
 
             ViewBag.Company = await _context.Companies.OrderByDescending(c => c.IsDefault).ThenByDescending(c => c.CreatedDate).FirstOrDefaultAsync();
 
-            return View(data);
+            var viewName = Request.Cookies["home_view"];
+            if (string.IsNullOrEmpty(viewName))
+            {
+                return View(data);
+            }
+            else 
+            {
+                ViewEngineResult result = _viewEngine.FindView(ControllerContext, viewName, isMainPage: false);
+                if (result.Success)
+                {
+                    return View(viewName, data);
+                }
+                else 
+                {
+                    return View(data);
+                }                
+            }
+            //return View("IndexSacombankBlue", data);
+            //return View(data);
         }
 
         //public async Task<IActionResult> Index1()

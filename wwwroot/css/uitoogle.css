@@ -1,0 +1,33 @@
+﻿.view-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 9999;
+}
+
+.btn-toggle {
+    border: 2px solid #c59d5f;
+    background: #fffaf2;
+    color: #8b5e34;
+    padding: 6px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all .2s ease;
+    min-width: 70px;
+}
+
+.btn-toggle:hover {
+    background: #c59d5f;
+    color: white;
+    min-width: 70px;
+}
+
+.btn-toggle.active {
+    background: #8b5e34;
+    color: white;
+    min-width: 70px;
+}

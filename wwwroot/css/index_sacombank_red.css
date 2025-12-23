@@ -1,0 +1,392 @@
+﻿/*:root {*/
+    /* 🔴 RED BACKGROUND */
+    /*--red-dark: #8b0e13;*/ /* đỏ đậm nền chính */
+    /*--red-main: #b5121b;*/ /* đỏ chủ đạo */
+    /*--red-light: #d61f26;*/ /* đỏ sáng highlight */
+    /* 🟡 GOLD */
+    /*--gold: #f5c46b;*/ /* vàng ánh kim */
+    /*--gold-dark: #d4a13c;*/ /* vàng đậm */
+    /* 💰 PRICE */
+    /*--buy: #ffffff;*/ /* giá mua: trắng */
+    /*--sell: #ffd166;*/ /* giá bán: vàng nổi */
+    /* ✨ TEXT */
+    /*--text-light: #ffffff;
+    --text-muted: #f1d5a5;*/
+    /* 📐 BORDER / LINE */
+    /*--border-gold: rgba(245,196,107,0.6);
+}*/
+
+:root {
+    /* 🔴 RED BACKGROUND */
+    --red-dark: #8b0e13; /* đỏ đậm nền chính */
+    --red-main: #b5121b; /* đỏ chủ đạo */
+    --red-light: #d61f26; /* đỏ sáng highlight */
+    /* 🟡 GOLD */
+    --gold: #f3c97a;
+    --gold-dark: #cfa14a;
+    /* 💰 PRICE */
+    /*--buy: #f8f9fa;*/ /* trắng ngà (không chói) */
+    /*--sell: #ffe08a;*/ /* vàng dịu, sang */
+    /* shadow */
+    /*--price-shadow: rgba(0,0,0,0.35);*/
+
+    --buy: #fff3d4; /* trắng ánh vàng */
+    --sell: #fff1b8; /* vàng kem rất sáng */
+    --sell-outline: #8b0000; /* đỏ sậm viền */
+
+    --price-glow: rgba(255,211,107,0.45);
+    /* ✨ TEXT */
+    --text-light: #ffffff;
+    --text-muted: #f1d5a5;
+    /* 📐 BORDER / LINE */
+    --border-gold: rgba(245,196,107,0.6);
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    /*width: 100vw;*/ /* QUAN TRỌNG */
+    /*max-width: 100vw;*/
+}
+
+body {
+    font-family: "Times New Roman", serif;
+    background: linear-gradient( to bottom, var(--red-dark), var(--red-main) );
+    color: var(--text-light);
+    overflow: auto;
+}
+
+.screen-wrapper {
+    height: 100%;
+    /*width: 100vw;*/ /* QUAN TRỌNG */
+    /*max-width: 100vw;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.company-header {
+    text-align: center;
+    padding: 20px 10px;
+    background: linear-gradient( to bottom, var(--red-light), var(--red-main) );
+    border-bottom: 4px solid var(--gold);
+}
+
+.company-name {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-shadow: 2px 2px 4px rgba(0,0,0,.4);
+}
+
+.company-meta {
+    font-size: 1.6rem;
+    opacity: 0.9;
+}
+
+.price-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 15px 0;
+    color: var(--gold);
+}
+
+.price-title .unit {
+    /*display: block;*/
+    font-size: 1.4rem;
+    margin-top: 4px;
+}
+
+.price-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.gold-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: linear-gradient( to right, var(--gold-dark), var(--gold) );
+    color: #7a0b0b;
+}
+
+.gold-table thead {
+    background: linear-gradient( to right, var(--gold-dark), var(--gold) );
+    color: #7a0b0b;
+}
+
+.gold-table th {
+    padding: 16px;
+    font-size: 2rem;
+    border-bottom: 2px solid var(--gold);
+}
+
+.gold-table tbody tr {
+    background: rgba(255,255,255,0.03);
+}
+
+.gold-table tbody tr:nth-child(even) {
+    background: rgba(255,255,255,0.06);
+}
+
+.gold-table td {
+    padding: 18px;
+    font-size: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.buy {
+    color: var(--buy);
+    font-weight: 900;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.55);
+    /*    text-shadow: 1px 1px 2px rgba(0,0,0,.35);*/
+}
+/*
+.sell {
+    color: var(--sell);
+    font-weight: 900;
+    text-shadow: -1px -1px 0 var(--sell-outline), 1px -1px 0 var(--sell-outline), -1px 1px 0 var(--sell-outline), 1px 1px 0 var(--sell-outline), 2px 2px 4px rgba(0,0,0,0.45);
+}*/
+
+/*.sell {
+    color: #fff7cc;*/ /* vàng sáng gần trắng */
+    /*font-weight: 900;
+    text-shadow: 0 0 6px rgba(255,215,0,0.6), 0 0 12px rgba(255,215,0,0.35), 2px 2px 4px rgba(0,0,0,0.5);
+}*/
+
+.sell {
+    color: #fffbe6; /* trắng ngà */
+    font-weight: 900;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.55);
+}
+
+.footer {
+    height: 48px;
+    text-align: center;
+    font-size: 1.4rem;
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    border-top: 2px solid var(--border-gold);
+}
+
+/* =============================
+   📱 PHONE (≤ 576px)
+============================= */
+/* For devices with a minimum width of 768px (Medium) */
+@media screen and (min-width: 1px) and (max-width: 576px) {
+    body {
+        overflow: auto;
+    }
+
+    th {
+        font-size: 0.8rem;
+    }
+
+    td {
+        font-size: 0.9rem;
+    }
+
+    .company-header {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .company-name {
+        font-size: 1.1rem;
+    }
+
+    .company-meta {
+        font-size: 0.6rem;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-title {
+        font-size: 1.0rem;
+        margin: 0px 0px 5px 0px;
+    }
+
+        .price-title .unit {
+            font-size: 0.9rem;
+        }
+
+    .gold-table th {
+        padding: 5px;
+        font-size: 1.1rem;
+    }
+
+    .gold-table td {
+        padding: 5px;
+        font-size: 1.2rem;
+    }
+
+    .updated-time {
+        font-size: 1.2rem;
+    }
+
+    .footer {
+        font-size: 1.2rem;
+    }
+}
+
+/* =============================
+   📲 iPad (577 – 991px)
+============================= */
+@media screen and (min-width: 577px) and (max-width: 991px) {
+    body {
+        overflow: auto;
+    }
+
+    .gold-table th {
+        padding: 5px;
+        font-size: 2.5rem;
+    }
+
+    .gold-table td {
+        padding: 5px;
+        font-size: 2.5rem;
+    }
+}
+
+/* =============================
+   💻 Laptop 14–15" (992 – 1439px)
+============================= */
+@media screen and (min-width: 992px) and (max-width: 1439px) {
+    body {
+        overflow: auto;
+    }
+
+    .company-name {
+        font-size: 2.0rem;
+    }
+
+    .company-meta {
+        font-size: 0.9rem;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-title {
+        font-size: 2.0rem;
+        margin: 5px 0px 5px 0px;
+    }
+
+    .gold-table th {
+        padding: 5px;
+        font-size: 1.5rem;
+    }
+
+    .gold-table td {
+        padding: 5px;
+        font-size: 2.1rem;
+    }
+
+    .footer {
+        font-size: 1.0rem;
+    }
+}
+
+/* =============================
+   🖥️ Desktop 24–27" (1440 – 2559px)
+============================= */
+@media screen and (min-width: 1440px) and (max-width: 2559px) {
+    body {
+        overflow: auto;
+    }
+
+    .company-header {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .company-name {
+        font-size: 3.3rem;
+    }
+
+    .company-meta {
+        font-size: 1.5rem;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-title {
+        font-size: 2.5rem;
+        margin: 5px 0px 5px 0px;
+    }
+
+    .gold-table th {
+        padding: 10px;
+        font-size: 3.0rem;
+    }
+
+    .gold-table td {
+        padding: 10px;
+        font-size: 4.3rem;
+    }
+}
+
+/* =============================
+   📺 TV 32–42" (≥ 2560px)
+============================= */
+@media screen and (min-width: 2560px) {
+    body {
+        overflow: auto;
+    }
+
+    .company-header {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .company-name {
+        font-size: 4.5rem;
+    }
+
+    .company-meta {
+        font-size: 2.5rem;
+    }
+
+    .company-wrapper {
+        padding: 5px 0px 5px 0px;
+    }
+
+    .price-title {
+        font-size: 4.5rem;
+        margin: 5px 0px 5px 0px;
+    }
+
+    .gold-table th {
+        padding: 0px 10px 0px 10px;
+        font-size: 8.0rem;
+    }
+
+    .gold-table td {
+        padding: 0px 10px 0px 10px;
+        font-size: 8.5rem;
+    }
+
+    .footer {
+        font-size: 2.2rem;
+    }
+
+    .price-title .unit {
+        font-size: 3.0rem;
+    }
+}
