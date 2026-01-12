@@ -78,6 +78,8 @@ namespace GoldPrice.Controllers
                 existing.Email = company.Email;
                 existing.Website = company.Website;
                 existing.TaxCode = company.TaxCode;
+                existing.Phone = company.Phone;
+                existing.DisplayFormat = company.DisplayFormat; 
                 existing.ModifiedBy = "admin";
                 existing.ModifiedDate = DateTime.Now;
 

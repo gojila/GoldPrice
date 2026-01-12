@@ -20,6 +20,7 @@
             <th>Email</th>
             <th>Website</th>
             <th>Mã số thuế</th>
+            <th>Định dạng</th>
             <th></th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
                 <td>@item.Email</td>
                 <td>@item.Website</td>
                 <td>@item.TaxCode</td>
+                <td>@item.DisplayFormat</td>
                 <td>
                     <a class="btn btn-sm btn-warning" href="@Url.Action("Create", "Company", new { id = item.CompanyId })">Sửa</a>
                     <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", "Company", new { id = item.CompanyId })" onclick="return confirm('Xóa công ty này?')">Xóa</a>

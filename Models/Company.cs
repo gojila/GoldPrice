@@ -19,6 +19,8 @@ namespace GoldPrice.Models
         public string? Website { get; set; }
         [Column(TypeName = "nvarchar(250)")]
         public string? TaxCode { get; set; }
+        [Column(TypeName = "nvarchar(250)")]
+        public string? DisplayFormat { get; set; }
         public bool IsDefault { get; set; }
     }
 }

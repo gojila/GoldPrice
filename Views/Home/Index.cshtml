@@ -1,5 +1,10 @@
 ﻿@{
     Layout = null;
+    string displayFormat = "N0";
+    if (ViewBag.Company != null && !string.IsNullOrEmpty(ViewBag.Company.DisplayFormat))
+    {
+        displayFormat = ViewBag.Company.DisplayFormat;
+    }
 }
 @model IEnumerable<GoldPrice>
 
@@ -48,8 +53,8 @@
                 {
                     <tr>
                         <td class="left">@item.GoldType?.GoldTypeName.ToUpper()</td>
-                        <td class="right buy">@item.BuyPrice.ToString("N0")</td>
-                        <td class="right sell">@item.SellPrice.ToString("N0")</td>
+                        <td class="right buy">@item.BuyPrice.ToString(displayFormat)</td>
+                        <td class="right sell">@item.SellPrice.ToString(displayFormat)</td>
                         @* <td class="right">@item.ApplyDate.ToString("dd/MM/yyyy HH:mm")</td> *@
                     </tr>
                 }
